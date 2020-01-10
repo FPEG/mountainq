@@ -47,7 +47,8 @@ void  main(void)
 		{
 			//image_buff[60][90]=0;
 			//LCD_show_ZZF_image();
-			Threshold = adapt_otsuThreshold(*image_buff, 120, 160, NULL);
+		  
+			adapt_otsuThreshold(*image_buff, 120, 160, &Threshold);
 			LCD_show_ZZF_image_t(Threshold);
 			//if (image_buff[60][80] > 60)
 			//{
