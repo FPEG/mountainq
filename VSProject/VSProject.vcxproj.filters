@@ -15,42 +15,174 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="fit_curves.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="function library.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="GRAY_CALCULATE.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IMAGE_DEAL.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="common.h">
+    <ClInclude Include="initialization.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="INV.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="LCD12864.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="steer_adv.h">
-      <Filter>源文件</Filter>
+    <ClInclude Include="Midline_Process.h">
+      <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="findtrack.h">
+    <ClInclude Include="MK60_conf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MT9V032.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PIT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PORT_cfg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ROAD_CHECK.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Round_Deal.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SERVO_FUZZY.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="steer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakRoad.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CL_FUN.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Cross_Deal.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Curvature.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DIRECTION.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="dmpKey.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="dmpmap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ELEC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Extract_Edge.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Feature_Extration.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="BreakRoad.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CL_FUN.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Cross_Deal.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Curvature.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DIRECTION.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ELEC.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Extract_Edge.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Feature_Extration.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fit_curves.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="function library.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="GRAY_CALCULATE.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="IMAGE_DEAL.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="initialization.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="INV.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="LCD12864.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Midline_Process.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MK60_conf.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MT9V032.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PIT.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ROAD_CHECK.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Round_Deal.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SERVO_FUZZY.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="steer.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="steer_adv.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="findtrack.c">
+    <ClCompile Include="Test.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

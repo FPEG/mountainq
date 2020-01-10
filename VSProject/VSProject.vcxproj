@@ -19,20 +19,64 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BreakRoad.h" />
+    <ClInclude Include="CL_FUN.h" />
     <ClInclude Include="common.h" />
-    <ClInclude Include="findtrack.h" />
+    <ClInclude Include="Cross_Deal.h" />
+    <ClInclude Include="Curvature.h" />
+    <ClInclude Include="DIRECTION.h" />
+    <ClInclude Include="dmpKey.h" />
+    <ClInclude Include="dmpmap.h" />
+    <ClInclude Include="ELEC.h" />
+    <ClInclude Include="ENGINE.h" />
+    <ClInclude Include="Extract_Edge.h" />
+    <ClInclude Include="Feature_Extration.h" />
+    <ClInclude Include="fit_curves.h" />
+    <ClInclude Include="function library.h" />
     <ClInclude Include="GRAY_CALCULATE.h" />
+    <ClInclude Include="IMAGE_DEAL.h" />
     <ClInclude Include="include.h" />
+    <ClInclude Include="initialization.h" />
+    <ClInclude Include="INV.h" />
     <ClInclude Include="LCD12864.h" />
-    <ClInclude Include="steer_adv.h" />
+    <ClInclude Include="Midline_Process.h" />
+    <ClInclude Include="MK60_conf.h" />
+    <ClInclude Include="MT9V032.h" />
+    <ClInclude Include="PIT.h" />
+    <ClInclude Include="PORT_cfg.h" />
+    <ClInclude Include="ROAD_CHECK.h" />
+    <ClInclude Include="Round_Deal.h" />
+    <ClInclude Include="SERVO_FUZZY.h" />
+    <ClInclude Include="steer.h" />
+    <ClInclude Include="Test.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="findtrack.c" />
+    <ClCompile Include="BreakRoad.c" />
+    <ClCompile Include="CL_FUN.c" />
+    <ClCompile Include="Cross_Deal.c" />
+    <ClCompile Include="Curvature.c" />
+    <ClCompile Include="DIRECTION.c" />
+    <ClCompile Include="ELEC.c" />
+    <ClCompile Include="ENGINE.c" />
+    <ClCompile Include="Extract_Edge.c" />
+    <ClCompile Include="Feature_Extration.c" />
+    <ClCompile Include="fit_curves.c" />
+    <ClCompile Include="function library.c" />
     <ClCompile Include="GRAY_CALCULATE.c" />
+    <ClCompile Include="IMAGE_DEAL.c" />
+    <ClCompile Include="initialization.c" />
+    <ClCompile Include="INV.c" />
     <ClCompile Include="LCD12864.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="Midline_Process.c" />
+    <ClCompile Include="MK60_conf.c" />
+    <ClCompile Include="MT9V032.c" />
+    <ClCompile Include="PIT.c" />
+    <ClCompile Include="ROAD_CHECK.c" />
+    <ClCompile Include="Round_Deal.c" />
+    <ClCompile Include="SERVO_FUZZY.c" />
     <ClCompile Include="steer.c" />
-    <ClCompile Include="steer_adv.c" />
+    <ClCompile Include="Test.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
