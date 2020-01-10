@@ -24,6 +24,7 @@
     <ClInclude Include="GRAY_CALCULATE.h" />
     <ClInclude Include="include.h" />
     <ClInclude Include="LCD12864.h" />
+    <ClInclude Include="MT9V032.h" />
     <ClInclude Include="steer_adv.h" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +32,7 @@
     <ClCompile Include="GRAY_CALCULATE.c" />
     <ClCompile Include="LCD12864.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="MT9V032.c" />
     <ClCompile Include="steer.c" />
     <ClCompile Include="steer_adv.c" />
   </ItemGroup>
