@@ -59,8 +59,10 @@
 #include "Midline_Process.h"
 #include "GRAY_CALCULATE.h"
 
-#include "Extract_Edge.h"      //边界提取
-#include "Feature_Extration.h"  //特征提取
+//#include "Extract_Edge.h"      //边界提取
+//#include "Feature_Extration.h"  //特征提取
+#include "steer_adv.h"
+#include "findtrack.h"
 #include "Round_Deal.h"
 #include "Cross_Deal.h"
 #include "ROAD_CHECK.h"

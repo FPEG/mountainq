@@ -6308,19 +6308,19 @@
             <name>$PROJ_DIR$\..\..\App\CL_FUN.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\VSProject\findtrack.c</name>
+            <name>$PROJ_DIR$\..\..\App\findtrack.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\VSProject\findtrack.h</name>
+            <name>$PROJ_DIR$\..\..\App\findtrack.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\App\main.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\VSProject\steer_adv.c</name>
+            <name>$PROJ_DIR$\..\..\App\steer_adv.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\VSProject\steer_adv.h</name>
+            <name>$PROJ_DIR$\..\..\App\steer_adv.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\App\Test.c</name>

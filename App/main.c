@@ -33,7 +33,8 @@ SCL(51的TX)         E9
 void  main(void)
 {
 	//gpio_init(PTA4, GPO, 0);
-	ftm_pwm_init(FTM2, FTM_CH0, 50, 78);//C
+	//ftm_pwm_init(FTM2, FTM_CH0, 50, 78);//C
+	SteerInit();
 	//ftm_pwm_init(FTM0, FTM_CH4, 10000, 800);//D4右轮倒车
 	//ftm_pwm_init(FTM0, FTM_CH6, 10000, 800);//D6左轮倒车
 	ftm_pwm_init(FTM0, FTM_CH5, 10000, 800);//D5右轮前进
@@ -47,7 +48,8 @@ void  main(void)
 		{
 			//image_buff[60][90]=0;
 			//LCD_show_ZZF_image();
-		  
+			GetBlackEndParam();//获取黑线截止行 
+			SearchCenterBlackline();
 			adapt_otsuThreshold(*image_buff, 120, 160, &Threshold);
 			LCD_show_ZZF_image_t(Threshold);
 			//if (image_buff[60][80] > 60)
@@ -58,7 +60,7 @@ void  main(void)
 			//{
 			//	ftm_pwm_duty(FTM2, FTM_CH0, 85);//左转
 			//}
-
+			SteerControl();
 			mt9v032_finish_flag = 0;
 			enable_irq(PORTC_IRQn);
 		}
