@@ -20,7 +20,7 @@ void binarization_processing(unsigned char* p, uint16 row, uint16 col)
 {
 	for (int i = 0; i < row; i++)//100
 	{
-		for (int j = 1; j < col; j++)//150
+		for (int j = 0; j < col; j++)//150
 		{
 			if (*(p + i * col + j) >= Threshold)
 			{
