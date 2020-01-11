@@ -165,6 +165,7 @@ void SteerControl(void)
 	/*
 	 * //舵机pwm更新
 	*/
+	LCD_Show_Number3(96, 1, SteerPwm);
 	ftm_pwm_duty(S3010_FTM, S3010_CH, SteerPwm);
 	/*
 	 * //记录pwm值
