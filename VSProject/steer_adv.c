@@ -114,6 +114,8 @@ void CalculateError(void)
 	 * // 一场图像偏差值
 	 */
 	Error = (40 - CenterMeanValue);
+	OLED_PrintFloat(96, 2, Error);
+
 	/*
 	 * //偏差限幅
 	 */
