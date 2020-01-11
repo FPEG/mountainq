@@ -219,15 +219,17 @@ void SearchCenterBlackline(void)
 		while (j <= ColumnMax - 3)
 		{
 			//从左向右找到白白黑跳变点
-			if (img[i][j] == White_Point &&
+			if (
 				img[i][j + 1] == Black_Point &&
-				img[i][j + 2] == Black_Point
+				img[i][j + 2] == Black_Point &&
+				  img[i][j] == White_Point
 				)
 			{
 				RightEdge[i] = j;//找到则赋值   找不到保持原值
 				break;//跳出本行寻线
 			}
 			j++;//列数往右移动
+			
 		}
 #pragma endregion 寻找右边界
 #pragma endregion 寻找边界

@@ -939,6 +939,7 @@ void LCD_show_ZZF_image_t(unsigned char t)
 						OLED_DrawPoint(j / 2, 64 - i / 2, 0);
 					}
 				}
+				OLED_DrawPoint(MiddleLine[j / 2], 64 - i / 2, 0);
 			}
 		}
 	}

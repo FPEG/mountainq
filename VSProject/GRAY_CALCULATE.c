@@ -24,7 +24,7 @@ void binarization_processing(unsigned char* p, uint16 row, uint16 col)
 		{
 			if (*(p + i * col + j) >= Threshold)
 			{
-				*(p + i * col + j) = White;
+				*(p + i * col + j) = 255;
 			}
 			else
 			{
