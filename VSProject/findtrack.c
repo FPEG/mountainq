@@ -27,6 +27,7 @@ int   Width[RowMax + 1] = {
 
 int   MidPri = 40;//当前行中点搜索起始点,取40,10,70
 int   LastLine = 0;//最后一行，动态前瞻
+float AvaliableLines = 0;//有效行数
 int   LeftLose = 0;//只有左线丢的数量
 int   RightLose = 0;//只有右线丢的数量
 int   AllLose = 0;//两边线都丢的数量
@@ -218,17 +219,15 @@ void SearchCenterBlackline(void)
 		while (j <= ColumnMax - 3)
 		{
 			//从左向右找到白白黑跳变点
-			if (
+			if (img[i][j] == White_Point && 
 				img[i][j + 1] == Black_Point &&
-				img[i][j + 2] == Black_Point &&
-				  img[i][j] == White_Point
+				img[i][j + 2] == Black_Point
 				)
 			{
 				RightEdge[i] = j;//找到则赋值   找不到保持原值
 				break;//跳出本行寻线
 			}
-			j++;//列数往右移动
-			
+			j=j+1;//列数往右移动
 		}
 #pragma endregion 寻找右边界
 #pragma endregion 寻找边界
@@ -637,10 +636,9 @@ void SearchCenterBlackline(void)
 		/*
 		 * 到这里是最后一行就停止执行后面的语句
 		 */
-		//int MyAvaliableLine = 0;
 		if (i == 0)
 		{
-			MyAvaliableLine = 60;
+			AvaliableLines = 60;
 			LastLine = 0;
 			break;
 		}
@@ -669,10 +667,9 @@ void SearchCenterBlackline(void)
 			)
 		{
 			LastLine = i;//最后一行，动态前瞻
-			MyAvaliableLine = 60 - i;//有效行数
+			AvaliableLines = 60 - i;//有效行数
 			break;
 		}
-		//return MyAvaliableLine;
 #pragma endregion 找有效截至行
 	}
 }
