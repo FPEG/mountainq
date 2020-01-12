@@ -37,7 +37,7 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="motor_adv.c" />
     <ClCompile Include="MT9V032.c" />
-    <ClCompile Include="RoundDeal.cpp" />
+    <ClCompile Include="RoundDeal.c" />
     <ClCompile Include="steer.c" />
     <ClCompile Include="steer_adv.c" />
     <ClCompile Include="TrackType.c" />

@@ -109,6 +109,9 @@ unsigned char BreakStartLFlag = 0;
 unsigned char BreakStartR = 0;
 unsigned char BreakStartRFlag = 0;
 
+unsigned char L_get_flag = 0;
+unsigned char R_get_flag = 0;
+
 /**
  * \brief 设定初值
  * \par 手段
@@ -146,7 +149,32 @@ void SetInitVal()
  */
 void SearchCenterBlackline(void)
 {
+	///*以下变量可能需要用于外部函数*/
+	Boundary.OnlyLeftLose = 0;                    //左边丢失最大数
+	Boundary.OnlyRightLose = 0;
+	Boundary.AllLeftLose = 0;
+	Boundary.AllRightLose = 0;
 
+	/*起始与结束*/
+	Boundary.L_EndLine = 0;                //左边沿搜索结束行数置  -1
+	Boundary.R_EndLine = 0;                //右边沿搜索结束行数置  -1
+
+	Boundary.L_StartLine = 0;
+	Boundary.R_StartLine = 0;
+
+
+	Boundary.Left_Edge_num = 0;
+	Boundary.Right_Edge_num = 0;
+
+	Inflection_point.L_down_point.x = 0;
+	Inflection_point.L_down_point.y = 0;
+	Inflection_point.L_up_point.x = 0;
+	Inflection_point.L_up_point.y = 0;
+	Inflection_point.R_down_point.x = 0;
+	Inflection_point.R_down_point.y = 0;
+	Inflection_point.R_up_point.x = 0;
+	Inflection_point.R_up_point.y = 0;
+	
 	int16 i = 0;//当前行数，越大越靠近车
 	int16 j = 0;//本行扫描起点,当前扫描位置
 	uint8 jj = 0;//副扫描位置，用于在剩余行和j对比
@@ -200,6 +228,11 @@ void SearchCenterBlackline(void)
 				/*
 				 * 记录最左白点
 				 */
+				if (L_get_flag == 0)
+				{
+					L_get_flag == 1;
+					Boundary.L_StartLine = i;
+				}
 				if(left_j_first_flag==0)
 				{
 					left_j_first_flag = 1;
@@ -230,6 +263,7 @@ void SearchCenterBlackline(void)
 		{
 			j = ColumnMax - 3;
 		}
+		
 		while (j <= ColumnMax - 3)
 		{
 			//从左向右找到白白黑跳变点
@@ -238,6 +272,11 @@ void SearchCenterBlackline(void)
 				img[i][j + 2] == Black_Point
 				)
 			{
+				if(R_get_flag==0)
+				{
+					R_get_flag == 1;
+					Boundary.R_StartLine = i;
+				}
 				RightEdge[i] = j;//找到则赋值   找不到保持原值
 				break;//跳出本行寻线
 			}
@@ -445,6 +484,8 @@ void SearchCenterBlackline(void)
 				if (img[i][j] == White_Point && img[i][j + 1] == Black_Point)
 				{
 					RightEdge[i] = j;
+					Boundary.R_EndLine = i;
+
 					break;
 				}
 				j++;
@@ -477,6 +518,8 @@ void SearchCenterBlackline(void)
 				if (img[i][j] == White_Point && img[i][j - 1] == Black_Point)
 				{
 					LeftEdge[i] = j;
+					Boundary.L_EndLine = i;
+
 					break;
 				}
 				j--;
@@ -496,6 +539,8 @@ void SearchCenterBlackline(void)
 				if (img[i][j] == White_Point && img[i][j - 1] == Black_Point)
 				{
 					LeftEdge[i] = j;
+					Boundary.L_EndLine = i;
+
 					break;
 				}
 				j--;
@@ -507,6 +552,7 @@ void SearchCenterBlackline(void)
 				if (img[i][j] == White_Point && img[i][j + 1] == Black_Point)
 				{
 					RightEdge[i] = j;
+					Boundary.R_EndLine = i;
 					break;
 				}
 				j++;
@@ -538,6 +584,8 @@ void SearchCenterBlackline(void)
 			 */
 			if (LeftEdge[i] != 0 && RightEdge[i] != ColumnMax)
 			{
+				Boundary.RowLose[i] = 1;
+
 				MiddleLine[i] = (LeftEdge[i] + RightEdge[i]) / 2;
 
 				//对斜出十字进行纠正
@@ -609,6 +657,7 @@ void SearchCenterBlackline(void)
 				{
 					MiddleLine[i] = LeftEdge[i] + Width[i] / 2;
 				}
+				Boundary.RowLose[i] = 2;
 			}
 			/*
 			 * 左边线丢失
@@ -628,6 +677,8 @@ void SearchCenterBlackline(void)
 
 					MiddleLine[i] = RightEdge[i] - Width[i] / 2;
 				}
+				Boundary.RowLose[i] = 3;
+
 			}
 			/*
 			 * 两边线都丢
@@ -642,11 +693,24 @@ void SearchCenterBlackline(void)
 					WhiteStart = i;
 				}
 				MiddleLine[i] = MiddleLine[i + 1];
+				Boundary.RowLose[i] = 4;
+
 			}
 
 		}
 #pragma endregion 找中线
 #pragma region 找有效截至行
+		Boundary.MiddleLine = MiddleLine;
+		Boundary.LeftEdge = LeftEdge;
+		Boundary.RightEdge = RightEdge;
+		Boundary.AllLose = AllLose;
+		Boundary.AllLeftLose = LeftLose;
+		Boundary.AllRightLose = RightLose;
+		Boundary.EndLine = AvaliableLines;
+		Boundary.track_Width = Width;
+		Boundary.LastEndLine = Boundary.EndLine;
+		Boundary.EndLine = MAX(Boundary.R_EndLine, Boundary.L_EndLine);
+		
 		/*
 		 * 到这里是最后一行就停止执行后面的语句
 		 */
@@ -903,6 +967,8 @@ void FindInflectionPoint()
 			{
 				RightInflectionPointRow = iiii;//记录拐点的行
 				RightInflectionPointCol = RightEdge[iiii];//记录拐点的列
+				Inflection_point.R_down_point.x = iiii;
+				Inflection_point.R_down_point.y = RightEdge[iiii];
 				RightInflectionPointFlag = 1;//标记找到右拐点
 				break;//退出for
 			}
@@ -928,6 +994,8 @@ void FindInflectionPoint()
 			{
 				LeftInflectionPointRow = iiii;//记录该拐点的行
 				LeftInflectionPointCol = LeftEdge[iiii];//记录该拐点的列
+				Inflection_point.L_down_point.x = iiii;
+				Inflection_point.L_down_point.y = LeftEdge[iiii];
 				LeftInflectionPointFlag = 1;//标记找到左拐点
 				break;//找到退出
 			}
@@ -958,6 +1026,7 @@ void FindInflectionPoint()
 				break;
 			}
 		}
+		
 		/*
 		 * //如果找到了一个跳变
 		 * //从上一个跳变的行开始，再向上寻找黑->白跳变

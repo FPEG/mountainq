@@ -74,7 +74,7 @@
     <ClCompile Include="TrackType.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="RoundDeal.cpp">
+    <ClCompile Include="RoundDeal.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

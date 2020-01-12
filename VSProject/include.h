@@ -65,6 +65,7 @@
 #include "steer_adv.h"
 #include "findtrack.h"
 #include "TrackType.h"
+#include "RoundDeal.h"
 #include "Round_Deal.h"
 #include "Cross_Deal.h"
 #include "ROAD_CHECK.h"
