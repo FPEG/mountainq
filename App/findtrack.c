@@ -129,6 +129,9 @@ void SetInitVal()
 		MiddleLine[i] = ColumnMax / 2;
 
 	}
+    float a[5]={0,0,0,0,0}; 
+    float *p;
+    arm_var_f32(a,5,p);
 
 }
 
