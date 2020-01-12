@@ -6323,6 +6323,18 @@
             <name>$PROJ_DIR$\..\..\App\motor_adv.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\App\ROAD_CHECK.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\App\ROAD_CHECK.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\App\RoundDeal.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\App\RoundDeal.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\App\steer_adv.c</name>
         </file>
         <file>

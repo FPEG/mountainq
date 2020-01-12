@@ -60,9 +60,9 @@ void initialization(void)
 	/*******权重******/
        for(int i=ROW_END;i>ROW_START;i--)
        {
-	      LineWeight[i]=-0.0125*(i-30.0)*(i-30.0)+5.0; //计算  权重
-	      if(LineWeight[i]<0)
-		     LineWeight[i]=0;
+	      //LineWeight[i]=-0.0125*(i-30.0)*(i-30.0)+5.0; //计算  权重
+	      //if(LineWeight[i]<0)
+		   //  LineWeight[i]=0;
        }
        /**///搬走
 

@@ -18,7 +18,7 @@ void Tft_Display()
 
        LCD_P6x8Str(0,1,"Round");
        LCD_Show_Number3(60,1,Round.Round_flag);
-       LCD_Show_Number3(100,1,RoundProcess);
+       //LCD_Show_Number3(100,1,RoundProcess);
 
        LCD_P6x8Str(0,2,"break");
        LCD_Show_Number3(60,2,Break_Road.Break_Road_Flag);

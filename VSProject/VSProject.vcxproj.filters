@@ -45,6 +45,9 @@
     <ClInclude Include="RoundDeal.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ROAD_CHECK.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -75,6 +78,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RoundDeal.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ROAD_CHECK.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

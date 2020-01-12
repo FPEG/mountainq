@@ -1,7 +1,9 @@
 #include "include.h"
 #include "findtrack.h"
 #include "TrackType.h"
-
+#include "RoundDeal.h"
+#include "TrackType.h"
+#include "ROAD_CHECK.h"
 
 /********************************************
 ------------------------------------
@@ -83,8 +85,8 @@ void  main(void)
 				NormalCrossConduct();
 
 			}
-
-			
+			Round_Deal();
+			LCD_Show_Number3(80, 4, Round.Round_flag);
 			MotorControl();
 			SteerControl();
 			mt9v032_finish_flag = 0;

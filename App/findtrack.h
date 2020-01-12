@@ -27,7 +27,7 @@ extern  int   RightEdge[RowMax + 1];
 extern  int   LeftEdge[RowMax + 1];
 extern  int   MiddleLine[RowMax + 1];
 extern int   LastLine;
-extern int   Width[RowMax + 1];
+extern unsigned char   Width[RowMax + 1];
 extern int   LeftLose;
 extern int   RightLose;
 extern unsigned char LoopFlag;

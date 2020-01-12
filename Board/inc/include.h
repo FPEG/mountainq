@@ -56,7 +56,7 @@
 #include "MT9V032.h"
 #include "IMAGE_DEAL.h"
 
-#include "Midline_Process.h"
+//#include "Midline_Process.h"
 #include "GRAY_CALCULATE.h"
 
 //#include "Extract_Edge.h"      //边界提取
@@ -65,9 +65,10 @@
 #include "steer_adv.h"
 #include "findtrack.h"
 #include "TrackType.h"
-#include "Round_Deal.h"
+#include "RoundDeal.h"
+//#include "Round_Deal.h"
 #include "Cross_Deal.h"
-#include "ROAD_CHECK.h"
+//#include "ROAD_CHECK.h"
 #include "INV.h"
 
 //ELEC采集

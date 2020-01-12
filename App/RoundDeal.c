@@ -1,12 +1,20 @@
+
+#include "common.h"
+#include "include.h"
+
+#include "ROAD_CHECK.h"
+#include "findtrack.h"
 #include "RoundDeal.h"
+#include "TrackType.h"
 
 Str_Round  Round = { 0 };
+Str_Boundary Boundary = {0};
 RoundTypeDef RoundType;
 RoundSizeTypeDef RoundSize;
 RoundProcessTypeDef RoundProcess;
 
 
-
+Str_Inflection_point    Inflection_point;   //拐点结构体
 //局部变量，紧用于本文件
 
 unsigned char  Round_row = 0;//行临时变量i，初始化为进环点的行？？
@@ -33,11 +41,9 @@ void Round_Deal()
 		Round_Process(&Boundary, &Round);
 	}
 }
-
 void Round_Process(Str_Boundary* str, Str_Round* round)
 {
 }
-
 /**
  * \brief 圆环检测，判断
  * \param[in] str 边界结构体
