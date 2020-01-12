@@ -185,6 +185,10 @@ void SearchCenterBlackline(void)
 		/*
 		 * 从中点往左搜索
 		 */
+
+		int left_j_first_flag = 0;
+		int left_j_count = 0;
+
 		while (j >= 3)//j>=3有效范围内进行搜寻 
 		{
 			//从右向左找到白白黑跳变 
@@ -196,10 +200,20 @@ void SearchCenterBlackline(void)
 				/*
 				 * 记录最左白点
 				 */
-				LeftEdge[i] = j;//找到则赋值 找不到保持原值0
-				break;//跳出本行寻线
+				if(left_j_first_flag==0)
+				{
+					left_j_first_flag = 1;
+					LeftEdge[i] = j;//找到则赋值 找不到保持原值0
+				}
+				left_j_count++ ;
+				
+				//break;//跳出本行寻线
 			}
 			j--;//列数往左移动
+		}
+		if(left_j_count>2)
+		{
+			LeftEdge[i] = j;//找到则赋值 找不到保持原值0
 		}
 #pragma endregion 寻找左边界
 #pragma region 寻找右边界
@@ -219,17 +233,15 @@ void SearchCenterBlackline(void)
 		while (j <= ColumnMax - 3)
 		{
 			//从左向右找到白白黑跳变点
-			if (
+			if (img[i][j] == White_Point && 
 				img[i][j + 1] == Black_Point &&
-				img[i][j + 2] == Black_Point &&
-				  img[i][j] == White_Point
+				img[i][j + 2] == Black_Point
 				)
 			{
 				RightEdge[i] = j;//找到则赋值   找不到保持原值
 				break;//跳出本行寻线
 			}
-			j++;//列数往右移动
-			
+			j=j+1;//列数往右移动
 		}
 #pragma endregion 寻找右边界
 #pragma endregion 寻找边界
