@@ -90,8 +90,8 @@ typedef union
  */
 typedef struct
 {
-    uint16 x;
-    uint16 y;
+    uint16 x;//ÐÐ
+    uint16 y;//ÁÐ
 } Site_t;
 
 /*

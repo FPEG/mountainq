@@ -21,8 +21,8 @@ typedef enum __RoundProcess
 {
   Round_Not_Found=0,
   Find_Round,
-  Find_Gap,
-  Into_Round,
+  Find_Gap,//发现圆环中心，认为有缺口
+  Into_Round,//可以进环
   Into_Round2,
   In_Round,
   Out_Round,
@@ -31,16 +31,19 @@ typedef enum __RoundProcess
 
 }RoundProcessTypeDef;
 
+/**
+ * \brief //圆环结构体
+ */
 typedef  struct
 {
-       unsigned char Round_flag;     //圆环标志位
+       unsigned char Round_flag;     //圆环标志位//是环为1
        unsigned char Round_flag_able; //圆环标志位使能
 
-       unsigned char Entrance_count;
+       unsigned char Entrance_count;//圆环入口计数
 
        unsigned char Track_Width_forRound[ROW_END];//赛道宽度
 
-}Str_Round;    //圆环结构体
+}Str_Round;    
 
 
 extern Str_Round  Round;

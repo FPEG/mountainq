@@ -44,8 +44,8 @@ typedef  struct
        unsigned char   track_Width[ROW];//赛道宽度
 
 
-       unsigned char L_StartLine;                //左边沿搜索结束行数置  -1
-       unsigned char R_StartLine;                //右边沿搜索结束行数置  -1
+       unsigned char L_StartLine;                //左线第一次获得线的行数，左边沿搜索结束行数置  -1
+       unsigned char R_StartLine;                //右线第一次获得线的行数，右边沿搜索结束行数置  -1
        unsigned char StartLine;
 
        unsigned char L_EndLine;                //左边沿搜索结束行数置  -1
@@ -59,11 +59,11 @@ typedef  struct
 
 typedef  struct
 {
-       Site_t  L_down_point;            //左边沿十字下方直角拐点数组（[0]为十字拐点行坐标值，[1]为十字拐点列坐标值）
-       Site_t  L_up_point;              //左边沿十字上方直角拐点数组（[0]为十字拐点行坐标值，[1]为十字拐点列坐标值）
+       Site_t  L_down_point;//左边沿十字下方直角拐点数组（[0]为十字拐点行坐标值，[1]为十字拐点列坐标值）
+       Site_t  L_up_point;//左边沿十字上方直角拐点数组（[0]为十字拐点行坐标值，[1]为十字拐点列坐标值）
 
-       Site_t  R_down_point;            //右边沿十字下方直角拐点数组（[0]为十字拐点行坐标值，[1]为十字拐点列坐标值）
-       Site_t  R_up_point;              //右边沿十字上方直角拐点数组（[0]为十字拐点行坐标值，[1]为十字拐点列坐标值）
+       Site_t  R_down_point;//右边沿十字下方直角拐点数组（[0]为十字拐点行坐标值，[1]为十字拐点列坐标值）
+       Site_t  R_up_point;//右边沿十字上方直角拐点数组（[0]为十字拐点行坐标值，[1]为十字拐点列坐标值）
 
 }Str_Inflection_point;   //拐点结构体
 
