@@ -35,10 +35,8 @@ void  main(void)
 	//gpio_init(PTA4, GPO, 0);
 	//ftm_pwm_init(FTM2, FTM_CH0, 50, 78);//C
 	SteerInit();
-	//ftm_pwm_init(FTM0, FTM_CH4, 10000, 800);//D4右轮倒车
-	//ftm_pwm_init(FTM0, FTM_CH6, 10000, 800);//D6左轮倒车
-	ftm_pwm_init(FTM0, FTM_CH5, 10000, 800);//D5右轮前进
-	ftm_pwm_init(FTM0, FTM_CH7, 10000, 800);//D7左轮前进
+	MotorInit();
+
 	ZZF_Init();
 	LCD_Init();        //OLED 屏幕初始化
 	enable_irq(PORTA_IRQn);//开图像采集中断；
@@ -63,6 +61,7 @@ void  main(void)
 			//{
 			//	ftm_pwm_duty(FTM2, FTM_CH0, 85);//左转
 			//}
+			MotorControl();
 			SteerControl();
 			mt9v032_finish_flag = 0;
 			enable_irq(PORTC_IRQn);

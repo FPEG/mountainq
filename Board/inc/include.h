@@ -52,7 +52,7 @@
 
 #include  "function library.h"
 #include  "CL_FUN.h"
-//摄像头采集处理
+ //摄像头采集处理
 #include "MT9V032.h"
 #include "IMAGE_DEAL.h"
 
@@ -61,6 +61,7 @@
 
 //#include "Extract_Edge.h"      //边界提取
 //#include "Feature_Extration.h"  //特征提取
+#include "motor_adv.h"
 #include "steer_adv.h"
 #include "findtrack.h"
 #include "Round_Deal.h"
@@ -78,8 +79,8 @@
 
 
   //陀螺仪
- #include "MPU6050.h"
- #include "My_I2C.h"
- #include "inv_mpu.h"
+#include "MPU6050.h"
+#include "My_I2C.h"
+#include "inv_mpu.h"
 
 #endif  //__INCLUDE_H__

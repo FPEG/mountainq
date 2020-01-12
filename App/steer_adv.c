@@ -7,7 +7,7 @@
  /*********define for SteerControl**********/
 
 float  KP = 0.0;//舵机方向比例系数，影响舵机的打角范围
-float  KD = 10.0;//10//7.5//舵机方向微分系数,影响舵机的打角反应
+float  KD = 14.0;//10//7.5//舵机方向微分系数,影响舵机的打角反应
 float  SteerPwmAdd = 0.0;//舵机pwm增量
 float  Error;//偏差值
 float  LastError;//上次的偏差
@@ -114,7 +114,7 @@ void CalculateError(void)
 	 * // 一场图像偏差值
 	 */
 	Error = (40 - CenterMeanValue);
-	OLED_PrintFloat(96, 2, Error);
+	OLED_PrintFloat(80, 0, Error);
 
 	/*
 	 * //偏差限幅
@@ -167,8 +167,15 @@ void SteerControl(void)
 	/*
 	 * //舵机pwm更新
 	*/
-	LCD_Show_Number3(96, 1, SteerPwm);
-	ftm_pwm_duty(S3010_FTM, S3010_CH, SteerPwm);
+	LCD_Show_Number3(80, 1, SteerPwm);
+	if(MaxMean>40)
+	{
+		ftm_pwm_duty(S3010_FTM, S3010_CH, SteerMidle);
+	}
+	else
+	{
+		ftm_pwm_duty(S3010_FTM, S3010_CH, SteerPwm);
+	}
 	/*
 	 * //记录pwm值
 	 */

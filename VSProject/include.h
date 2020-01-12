@@ -61,6 +61,7 @@
 
 //#include "Extract_Edge.h"      //边界提取
 //#include "Feature_Extration.h"  //特征提取
+#include "motor_adv.h"
 #include "steer_adv.h"
 #include "findtrack.h"
 #include "Round_Deal.h"

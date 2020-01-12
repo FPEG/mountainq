@@ -6317,6 +6317,12 @@
             <name>$PROJ_DIR$\..\..\App\main.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\App\motor_adv.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\App\motor_adv.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\App\steer_adv.c</name>
         </file>
         <file>
