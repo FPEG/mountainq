@@ -50,30 +50,30 @@ int BlackEndMaxMax = 0;
 int BlackEndMax = 0;
 int DropRow = 0;//封顶的行数,从前往后数，应该是黑格
 
-/*********define for FindInflectionPoint()**********/
+//define for FindInflectionPoint()**********/
 
-int RightInflectionPointRow = 0;
-int RightInflectionPointCol = 0;
-int LeftInflectionPointRow = 0;
-int LeftInflectionPointCol = 0;
-unsigned char RightInflectionPointFlag = 0;
-unsigned char LeftInflectionPointFlag = 0;
+int RightInflectionPointRow = 0;//右边的拐点的行坐标
+int RightInflectionPointCol = 0;//右边的拐点的列坐标
+int LeftInflectionPointRow = 0;//左边的拐点的行坐标
+int LeftInflectionPointCol = 0;//左边的拐点的列坐标
+unsigned char RightInflectionPointFlag = 0;//找到右拐点的标志位
+unsigned char LeftInflectionPointFlag = 0;//找到左拐点的标志位
 unsigned char LeftInflectionPointSecondFlag = 0;
 unsigned char RightInflectionPointSecondFlag = 0;
-unsigned char LoopFlag = 0;
+unsigned char LoopFlag = 0;//找到环形赛道类型的标志
 unsigned char LoopRightOkFlag = 0;
 unsigned char LoopLeftOkFlag = 0;
-unsigned int StartRow = 0;
-unsigned int StartCol = 0;
-unsigned char MilldleBlack = 0;
+unsigned int StartRow = 0;//从底部往上扫描圆环中间的黑圆的起始行，为左右行平均值
+unsigned int StartCol = 0;//从底部往上扫描圆环中间的黑圆的起始列，为左右列平均值
 unsigned int LoopTop = 0;
+unsigned char MilldleBlack = 0;//圆环中间的黑圆的顶部和圆环中间的黑圆的底部的行坐标的平均值
 unsigned int LoopRightBorderLose = 0;
 unsigned int LoopLeftBorderLose = 0;
-int LoopBorttomFlag = 0;
-int LoopBorttomRow = 0;
-int LoopMilldleRow = 0;
-unsigned int LoopMilldleFlag = 0;
-unsigned int LoopTopRow = 0;
+int LoopBorttomFlag = 0;//找到圆环中间的黑圆的底部的标志位
+int LoopBorttomRow = 0;//圆环中间的黑圆的底部的行坐标
+int LoopMilldleRow = 0;//圆环中间的黑圆的顶部的行坐标
+unsigned int LoopMilldleFlag = 0;//找到圆环中间的黑圆的顶部的标志位
+unsigned int LoopTopRow = 0;//找到外环的顶部
 unsigned int LoopLeft = 0;
 unsigned int MilldlePonit = 0;
 unsigned int LoopRight = 0;
@@ -129,9 +129,6 @@ void SetInitVal()
 		MiddleLine[i] = ColumnMax / 2;
 
 	}
-    float a[5]={0,0,0,0,0}; 
-    float *p;
-    arm_var_f32(a,5,p);
 
 }
 
@@ -684,6 +681,7 @@ void SearchCenterBlackline(void)
 			)
 		{
 			LastLine = i;//最后一行，动态前瞻
+			LCD_Show_Number3(80, 2, LastLine);
 			AvaliableLines = 60 - i;//有效行数
 			break;
 		}
@@ -843,21 +841,22 @@ void GetBlackEndParam()//获取黑线截止行
 
 #if 1
 
-//找左右拐点，识别环
-//一直都要开着
+
 
 /**0
  * \brief //寻找拐点
+ * //找左右拐点，识别环
+ * //一直都要开着
+ *
+ * \par 手段
+ * 找到拐点
  */
 void FindInflectionPoint()
 {
-
-	char i = 0;
-	char i_i = 0;
+	char iiii = 0;//row行数
+	char i_i = 0; //上一个跳变的行
 	char i_i_i = 0;
-
 	//变量清零
-
 	RightInflectionPointRow = 0;//右边的拐点的行坐标
 	RightInflectionPointCol = 0;//右边的拐点的列坐标
 	LeftInflectionPointRow = 0;//左边的拐点的行坐标
@@ -876,131 +875,162 @@ void FindInflectionPoint()
 	MilldleBlack = 0;//圆环中间的黑圆的顶部和圆环中间的黑圆的底部的行坐标的平均值
 	LoopFlag = 0;//找到环形赛道类型的标志
 
-	 //右拐点
-
-	for (i = 59; i >= 25; i--)//不能扫描太远，否则会误判
+	 /*
+	  * //右拐点
+	  * 寻找右拐点
+	  * [i-1]>[i]<=[i+1]
+	  * 写入RightInflectionPointRow
+	  * RightInflectionPointCol
+	  * RightInflectionPointFlag
+	  */
+	for (iiii = 59; iiii >= 25; iiii--)//不能扫描太远，否则会误判
 	{
-		if (RightEdge[i] != ColumnMax && RightEdge[i - 1] != ColumnMax && RightEdge[i + 1] != ColumnMax) //连续三行不丢线
+		/*
+		 * //连续三行不丢线
+		 */
+		if (
+			RightEdge[iiii] != ColumnMax &&
+			RightEdge[iiii - 1] != ColumnMax &&
+			RightEdge[iiii + 1] != ColumnMax) 
 		{
-
-			if ((RightEdge[i] - RightEdge[i + 1] <= 0) && (RightEdge[i - 1] - RightEdge[i]) > 0)//找到右边线有拐点
+			/*
+			 * //找到右边线有拐点
+			 * [i-1]>[i]<=[i+1]
+			 */
+			if (
+				(RightEdge[iiii] - RightEdge[iiii + 1] <= 0) &&
+				(RightEdge[iiii - 1] - RightEdge[iiii]) > 0)
 			{
-
-				RightInflectionPointRow = i;//记录拐点的行
-				RightInflectionPointCol = RightEdge[i];//记录拐点的列
+				RightInflectionPointRow = iiii;//记录拐点的行
+				RightInflectionPointCol = RightEdge[iiii];//记录拐点的列
 				RightInflectionPointFlag = 1;//标记找到右拐点
 				break;//退出for
 			}
-
 		}
 	}
 
-	//左拐点
-	for (i = 59; i > 25; i--)
+	/*
+	 * //左拐点
+	 * 寻找右拐点
+	 */
+	for (iiii = 59; iiii > 25; iiii--)
 	{
-		if (LeftEdge[i] != 0 && LeftEdge[i - 1] != 0 && LeftEdge[i + 1] != 0)
+		if (LeftEdge[iiii] != 0 &&
+			LeftEdge[iiii - 1] != 0 &&
+			LeftEdge[iiii + 1] != 0)
 		{
-
-			if ((LeftEdge[i] - LeftEdge[i + 1] >= 0) && (LeftEdge[i - 1] - LeftEdge[i] < 0))//找到拐点
+			/*
+			 * //找到拐点
+			 * 找到左边线有拐点
+			 */
+			if ((LeftEdge[iiii] - LeftEdge[iiii + 1] >= 0) &&
+				(LeftEdge[iiii - 1] - LeftEdge[iiii] < 0))
 			{
-				LeftInflectionPointRow = i;//记录该拐点的行
-
-				LeftInflectionPointCol = LeftEdge[i];//记录该拐点的列
-
+				LeftInflectionPointRow = iiii;//记录该拐点的行
+				LeftInflectionPointCol = LeftEdge[iiii];//记录该拐点的列
 				LeftInflectionPointFlag = 1;//标记找到左拐点
-
 				break;//找到退出
 			}
 		}
 	}
 
-	//可以同时找到两个拐点，开始识别环路(或许可以考虑一下，如果只找到一个拐点的情况，这样就能更容易识别到环路)
-
+	/*
+	 * //可以同时找到两个拐点，开始识别环路
+	 * (或许可以考虑一下，如果只找到一个拐点的情况，这样就能更容易识别到环路)
+	 */
 	if (LeftInflectionPointFlag && RightInflectionPointFlag)//同时找到两个拐点
 	{
-		StartCol = (unsigned int)((LeftInflectionPointCol + RightInflectionPointCol) / 2);// 取左右拐点的列坐标平均值
-
-		StartRow = (unsigned int)((LeftInflectionPointRow + RightInflectionPointRow) / 2);//取左右拐点的行坐标的平均值
-
-		for (i = StartRow; i >= 8; i--)//固定一列（StartCol）从开始的行往上扫描，寻找环路中间的圆的特征（找到一个白到黑的跳变，然后多行黑的然后到白）
+		//取左右拐点的列坐标平均值
+		StartCol = (unsigned int)((LeftInflectionPointCol + RightInflectionPointCol) / 2);
+		//取左右拐点的行坐标的平均值
+		StartRow = (unsigned int)((LeftInflectionPointRow + RightInflectionPointRow) / 2);
+		/*
+		 * 固定一列（StartCol）从开始的行往上扫描，寻找环路中间的圆的特征
+		 * （找到一个白到黑的跳变，然后多行黑的然后到白）
+		 */
+		for (iiii = StartRow; iiii >= 8; iiii--)
 		{
-			if (img[i][StartCol] == White_Point && img[i - 1][StartCol] == Black_Point)
+			if (img[iiii][StartCol] == White_Point &&
+				img[iiii - 1][StartCol] == Black_Point)
 			{
-
-				LoopBorttomRow = i - 1;//记录第一次跳变的行
-
+				LoopBorttomRow = iiii - 1;//记录第一次跳变的行
 				LoopBorttomFlag = 1;//置位标志
-
 				break;
 			}
-
 		}
-
-		if (LoopBorttomFlag)//如果找到了一个跳变
+		/*
+		 * //如果找到了一个跳变
+		 * //从上一个跳变的行开始，再向上寻找黑->白跳变
+		 * 此时i_i=黑园底+1
+		 */
+		if (LoopBorttomFlag)
 		{
-			i_i = i - 2;//从上一个跳变的行开始，再向上寻找黑->白跳变
-
+			i_i = iiii - 2;
 			while (i_i >= 8)
 			{
-				if (img[i_i][StartCol] == Black_Point && img[i_i - 1][StartCol] == White_Point)
+				/*
+				 * 黑白
+				 */
+				if (
+					img[i_i][StartCol] == Black_Point &&
+					img[i_i - 1][StartCol] == White_Point
+					)
 				{
-
-
 					LoopMilldleRow = i_i - 1;//记录第二个跳变的行坐标
 					LoopMilldleFlag = 1;//标志位置位
 					break; //退出while   
-
 				}
-
 				i_i--;
-
 			}
 		}
-
-
-		if (LoopMilldleFlag)//找到圆环中间的黑圆的顶部
+		/*
+		 * //找到圆环中间的黑圆的顶部
+		 */
+		if (LoopMilldleFlag)
 		{
 			i_i_i = i_i - 1;
-
 			while (i_i_i > 8)
 			{
-				if (img[i_i_i][StartCol] == White_Point && img[i_i_i - 1][StartCol] == Black_Point)//由白到黑跳变，找到
+				if (img[i_i_i][StartCol] == White_Point &&
+					img[i_i_i - 1][StartCol] == Black_Point)//由白到黑跳变，找到
 				{
 					LoopTopRow = i_i_i - 1;
-
-					if (LoopBorttomRow - LoopMilldleRow >= 4 && AllLose < 1 && (LoopMilldleRow - LoopTopRow) <= 5)//判断一下圆的黑点数
+					/*
+					 * //判断一下圆的黑点数
+					 */
+					if (LoopBorttomRow - LoopMilldleRow >= 4 &&
+						AllLose < 1 &&
+						(LoopMilldleRow - LoopTopRow) <= 5
+						)
 					{
-
-
-						if (ABS(LeftEdge[StartRow - 2] - RightEdge[StartRow - 2]) - Width[StartRow - 2] >= 6 && ABS(LeftEdge[StartRow - 3] - RightEdge[StartRow - 3]) - Width[StartRow - 3] >= 10 && ABS(LeftEdge[StartRow - 4] - RightEdge[StartRow - 4]) - Width[StartRow - 4] >= 12)//赛道宽度突变
+						/*
+						 * //赛道宽度突变
+						 */
+						if (
+							ABS(LeftEdge[StartRow - 2] - RightEdge[StartRow - 2]) - Width[StartRow - 2] >= 6 &&
+							ABS(LeftEdge[StartRow - 3] - RightEdge[StartRow - 3]) - Width[StartRow - 3] >= 10 &&
+							ABS(LeftEdge[StartRow - 4] - RightEdge[StartRow - 4]) - Width[StartRow - 4] >= 12
+							)
 						{
 							LoopFlag = 1;//环形赛道标志位置
 							break;
 						}
 					}
-
 				}
-
 				i_i_i--;
 			}
 		}
 	}
 }
 //底下几行丢线，面向一团黑圆
-
-
 #endif
-
-
-
 #if 1
-
-//寻找环形出口
-//找到圆的4个切点
-//将中间的黑块横切成两块  
-
+/*
+ * //寻找环形出口
+ * //找到圆的4个切点
+ * //将中间的黑块横切成两块
+ */
 void FindLoopExit()
-
 {
 	int i, j;
 	unsigned char i_i;
@@ -1023,60 +1053,47 @@ void FindLoopExit()
 
 	if (LoopFlag)
 	{
-
 		//从黑圆的中间往两边寻找跳变
-
 		MilldlePonit = LoopBorttomRow - ((LoopBorttomRow - LoopMilldleRow) / 2);
-
 		for (j = StartCol; j < 76; j++)
 		{
 			if (img[MilldlePonit][j] == Black_Point && img[MilldlePonit][j + 1] == Black_Point && img[MilldlePonit][j + 2] == White_Point)
 			{
-
 				LoopRight = j + 1;
 				//break;
 			}
-
 			unsigned char j_j = j + 2;
-
 			if (LoopRight)
 			{
-
 				while (j_j < 76)
 				{
-					if (img[MilldlePonit][j_j] == White_Point && img[MilldlePonit][j_j + 1] == White_Point && img[MilldlePonit][j_j + 2] == Black_Point)
+					if (img[MilldlePonit][j_j] == White_Point &&
+						img[MilldlePonit][j_j + 1] == White_Point &&
+						img[MilldlePonit][j_j + 2] == Black_Point)
 					{
 						LoopRightR = j_j + 2;
-
 						break;
 					}
-
 					j_j++;
 				}
-
 			}
-
 			if (LoopRightR)
 			{
 				break;
-
 			}
 		}
-
 		for (j = StartCol; j > 3; j--)
 		{
-			if (img[MilldlePonit][j] == Black_Point && img[MilldlePonit][j - 1] == Black_Point && img[MilldlePonit][j - 2] == White_Point)
+			if (img[MilldlePonit][j] == Black_Point &&
+				img[MilldlePonit][j - 1] == Black_Point &&
+				img[MilldlePonit][j - 2] == White_Point)
 			{
-
 				LoopLeft = j - 1;
 				//break;
 			}
-
 			unsigned char jj = j - 2;
-
 			if (LoopLeft)
 			{
-
 				while (jj > 3)
 				{
 					if (img[MilldlePonit][jj] == White_Point && img[MilldlePonit][jj - 1] == White_Point && img[MilldlePonit][jj - 2] == Black_Point)
@@ -1084,27 +1101,21 @@ void FindLoopExit()
 						LoopLeftL = jj - 2;
 						break;
 					}
-
 					jj--;
 				}
-
 			}
-
 			if (LoopLeftL)
 			{
 				break;
 			}
 		}
-
-		//先从上面找出口
-
-
+		/*
+		 * //先从上面找出口
+		 */
 		for (i = 0; i < 80; i++)
 		{
-
 			BigLooptUp[i] = 0;
 		}
-
 		for (j = LoopLeft - 10; j < LoopRight + 10; j++)
 		{
 			for (i = MilldlePonit; i > 5; i--)
@@ -1114,22 +1125,16 @@ void FindLoopExit()
 					BigLooptUp[j] = i - 1;
 					break;
 				}
-
 			}
-
 		}
-
 		for (j = 2; j < 75; j++)
 		{
-
 			if (BigLooptUp[j] != 0 && BigLooptUp[j + 1] != 0 && BigLooptUp[j - 1] != 0)
 			{
 				if (ABS(BigLooptUp[j + 1] - BigLooptUp[j]) >= 2 && ABS(BigLooptUp[j + 1] - BigLooptUp[j - 1]) >= 2)
 				{
-
 					ExitFlag = j;
 					break;
-
 				}
 				else
 				{
@@ -1137,77 +1142,54 @@ void FindLoopExit()
 				}
 
 			}
-
 		}
-
 		if (ExitFlag != 0)
 		{
-
 			if (ExitFlag >= StartCol)
 			{
 				RightUpExitFlag = 1;
-
 			}
 			else if (ExitFlag < StartCol)
 			{
-
 				LeftUpExitFlag = 1;
 			}
-
 		}
-
-		//如果上面没有找到出口，就看看有没有丢一边 
-
-
+		/*
+		 * //如果上面没有找到出口，就看看有没有丢一边
+		 */
 		for (i = 0; i < 60; i++)
 		{
-
 			BigLoopLeftUp[i] = 0;
 			BigLoopRightUp[i] = 0;
 		}
-
 		if ((!LeftUpExitFlag) && (!RightUpExitFlag) && LoopFlag && LoopLeftControlFlag == 0 && LoopRightControlFlag == 0)//这里改过
 		{
-
 			if (StartCol >= 39)
 			{
 				LeftScanFlag = 1;//标志往左边找出口
-
 				for (i = StartRow; i > LoopMilldleRow - 5; i--)
 				{
-
 					for (j = LoopLeft - 2; j > 1; j--)
 					{
-
 						if (img[i][j + 1] == White_Point)//先判断前一行是不是白的
 						{
-
 							if (img[i][j] == White_Point && img[i][j - 1] == Black_Point)//由白到黑跳变
 							{
-
 								BigLoopLeftUp[i] = j - 1;
 								break;
 							}
 
 						}
-
 						else
-
 						{
 							break;
-
 						}
 					}
-
-
 				}
-
 				for (i = StartRow - 1; i > LoopMilldleRow - 5; i--)
 				{
-
 					if (BigLoopLeftUp[i] != 0 && BigLoopLeftUp[i - 1] == 0)
 					{
-
 						BreakStartL = BigLoopLeftUp[i];
 						BreakStartLFlag = 1;
 						break;
@@ -1218,36 +1200,25 @@ void FindLoopExit()
 						BreakStartLFlag = 0;
 					}
 				}
-
 				if (BreakStartLFlag)
 				{
-
 					i_i = i - 1;
-
 					while (i_i > LoopMilldleRow - 5)
-
 					{
 						if (BigLoopLeftUp[i_i] == 0 && BigLoopLeftUp[i_i - 1] != 0)
 						{
-
 							BreakEndL = BigLoopLeftUp[i - 1];
 							BreakEndLFlag = 1;
 							break;
 						}
-
 						else
 						{
-
 							BreakEndL = 0;
 							BreakEndLFlag = 0;
-
 						}
-
 						i_i--;
 					}
-
 				}
-
 				if (BreakEndLFlag && BreakStartLFlag)
 				{
 					if (ABS(BreakStartL - BreakEndL >= 6))
@@ -1255,27 +1226,19 @@ void FindLoopExit()
 						LeftExitFlag = 1;
 						//break;
 					}
-
 				}
 			}
-
-
 			else if (StartCol < 39)
 			{
 				RightScanFlag = 1;//标志往右边找出口
-
 				for (i = StartRow; i > LoopMilldleRow - 5; i--)
 				{
-
 					for (j = LoopRight + 2; j < 79; j++)
 					{
-
 						if (img[i][j - 1] == White_Point)
 						{
-
 							if (img[i][j] == White_Point && img[i][j + 1] == Black_Point)
 							{
-
 								BigLoopRightUp[i] = j - 1;
 								break;
 							}
@@ -1283,18 +1246,13 @@ void FindLoopExit()
 						else
 						{
 							break;
-
 						}
-
 					}
 				}
-
 				for (i = StartRow - 1; i > LoopMilldleRow - 5; i--)
 				{
-
 					if (BigLoopRightUp[i] != 0 && BigLoopRightUp[i - 1] == 0)
 					{
-
 						BreakStartR = BigLoopRightUp[i];
 						BreakStartRFlag = 1;
 						break;
@@ -1305,36 +1263,25 @@ void FindLoopExit()
 						BreakStartRFlag = 0;
 					}
 				}
-
 				if (BreakStartRFlag)
 				{
-
 					i_i = i - 1;
-
 					while (i_i > LoopMilldleRow - 5)
-
 					{
 						if (BigLoopRightUp[i_i] == 0 && BigLoopRightUp[i_i - 1] != 0)
 						{
-
 							BreakEndR = BigLoopLeftUp[i - 1];
 							BreakEndRFlag = 1;
 							break;
 						}
-
 						else
 						{
-
 							BreakEndR = 0;
 							BreakEndRFlag = 0;
-
 						}
-
 						i_i--;
 					}
-
 				}
-
 				if (BreakEndRFlag && BreakStartRFlag)
 				{
 					if (ABS(BreakStartR - BreakEndR >= 6))
@@ -1342,43 +1289,26 @@ void FindLoopExit()
 						RightExitFlag = 1;
 						//break;
 					}
-
 				}
-
 			}
-
-
 			if (RightScanFlag && !RightExitFlag)//如果找了右边是否有出口，并且在右边没有找到出口
 			{
 				LeftExitFlag = 1;//默认出口在左边
 			}
-
 			else if (LeftScanFlag && !LeftExitFlag)
 			{
 				RightExitFlag = 1;
-
 			}
-
 		}
-
 	}
-
 }
-
 #endif
-
-
 #if 1
-
 //环路的控制
 //外部调用
-
 void LoopControl()
 {
-
 	static int x, y;
-
-
 	if ((LeftUpExitFlag || LeftExitFlag) && !(RightUpExitFlag || RightExitFlag) && LoopLeftControlFlag == 0 && LoopRightControlFlag == 0)//出口在左边
 	{
 		x++;
@@ -1388,60 +1318,38 @@ void LoopControl()
 			LoopLeftControlFlag = 1;//获取环路左边的控制标志位
 		}
 	}
-
-
 	if (!(LeftUpExitFlag || LeftExitFlag) && (RightUpExitFlag || RightExitFlag) && LoopLeftControlFlag == 0 && LoopRightControlFlag == 0)
 	{
-
 		y++;
 		if (y >= 3)
 		{
 			LoopRightControlFlag = 1;//获取环路右边的控制标志位
 			y = 0;
 		}
-
-
 	}
-
 }
-
 #endif
-
-
 #if 1
-
-//环形赛道入口补线
-
+/**
+ * //环形赛道入口补线
+ */
 void LoopRepair()
 {
 	int i;
-
-
 	if (LoopRightControlFlag)//如果获得了出口在右边的控制信号
 	{
-
 		for (i = 58; i > 15; i--)
 		{
-
 			MiddleLine[i] = RightEdge[i] - Width[i] / 2;
-
 		}
-
-
 		if (LeftEdge[58] == 0 && LeftEdge[57] == 0 && LeftEdge[56] == 0)//底部几行全部丢线
-
 		{
-
 			ClearLoopControlFlag = 1;//清掉环道控制标志
-
 			for (i = 58; i > 15; i--)
 			{
-
 				MiddleLine[i] = RightEdge[i] - Width[i] / 2;
 			}
-
 		}
-
 		if (ClearLoopControlFlag && LeftEdge[45] != 0 && LeftEdge[46] != 0)//清标志
 		{
 			// gpio_set   (PTB19, 0);
@@ -1450,38 +1358,22 @@ void LoopRepair()
 			ClearLoopControlFlag = 0;
 			MotivateLoopDlayFlagR = 1;
 		}
-
-
 	}
-
 	//左边
-
-
 	else if (LoopLeftControlFlag)
 	{
 		for (i = 58; i > 15; i--)
 		{
 			MiddleLine[i] = LeftEdge[i] + Width[i] / 2;
-
 		}
-
-
 		if (RightEdge[58] == 80 && RightEdge[57] == 80 && RightEdge[56] == 80)
-
 		{
-
 			ClearLoopControlFlag = 1;
-
 			for (i = 58; i > 15; i--)
 			{
-
 				MiddleLine[i] = LeftEdge[i] + Width[i] / 2;
 			}
-
 		}
-
-
-
 		if (ClearLoopControlFlag && RightEdge[45] != 80 && RightEdge[46] != 80)
 		{
 			LoopRightControlFlag = 0;
@@ -1489,22 +1381,14 @@ void LoopRepair()
 			ClearLoopControlFlag = 0;
 			MotivateLoopDlayFlagL = 1;//延时开始
 		}
-
-
 	}
-
 }
-
-
-
-
 #endif
-
-//环路出口补线处理
-
+/*
+ * //环路出口补线处理
+ */
 void LoopExitRepair()
 {
-
 	int i;
 	static unsigned char  ClearInLoopLeftInflectionPointFlag = 0;
 	static unsigned char  ClearInLoopRightInflectionPointFlag = 0;
@@ -1515,75 +1399,48 @@ void LoopExitRepair()
 	static unsigned char  LastInLoopRightInflectionPointFlag = 0;
 	static unsigned char  LastLastInLoopRightInflectionPointFlag = 0;
 	static unsigned char  InLoopDlay = 0;
-
-
 	if (MotivateLoopDlayFlagL && OpenLoopExitRepairFlagL == 0 && MotivateLoopDlayFlagR == 0)//在环道里面,关了环道识别和十字识别
 	{
 		OpenLoopExitRepairNumL++;//开个小延时
-
 		if (OpenLoopExitRepairNumL >= 6)//延时够了
 		{
 			OpenLoopExitRepairNumL = 0;
 			OpenLoopExitRepairFlagL = 1;//在环路里面打开出口寻找函数
-
 		}
-
 	}
-
 	if (OpenLoopExitRepairFlagL)//左边
 	{
-
 		LastLastInLoopLeftInflectionPointFlag = LastInLoopLeftInflectionPointFlag;
 		LastInLoopLeftInflectionPointFlag = InLoopLeftInflectionPointFlag;
-
-
 		for (i = 59; i > 20; i--) //前面40行
 		{
-
 			if (LeftEdge[i] != 0 && LeftEdge[i - 1] != 0 && LeftEdge[i + 1] != 0)
 			{
 				if ((LeftEdge[i] - LeftEdge[i + 1] >= 0) && (LeftEdge[i - 1] - LeftEdge[i] <= -1))
-
 				{
-
 					InLoopLeftInflectionPointRow = i - 1;
 					InLoopLeftInflectionPointFlag = 1;
 					break;
-
 				}
 				else
-
 				{
-
 					InLoopLeftInflectionPointRow = 0;
-
 					InLoopLeftInflectionPointFlag = 0;
 				}
-
 			}
-
 		}
-
 		if (InLoopLeftInflectionPointFlag = 1 && (InLoopLeftInflectionPointRow >= 25))
 		{
-
 			ClearInLoopLeftInflectionPointFlag = 1;
-
 		}
-
 		if (ClearInLoopLeftInflectionPointFlag)
 		{
 			gpio_set(PTB19, 1);
-
 			for (i = 58; i > 15; i--)
 			{
-
 				MiddleLine[i] = LeftEdge[i] + Width[i] / 2;
-
 			}
-
 			InLoopDlay++;//启动延时保险清标志
-
 			if (InLoopDlay >= 100)//如果这麽久还没满足清标志的条件,强制清标志
 			{
 				gpio_set(PTB19, 0);
@@ -1595,12 +1452,8 @@ void LoopExitRepair()
 				InLoopDlay = 0;
 				OpenLoopExitRepairFlagL = 0;
 				OpenLoopExitRepairFlagR = 0;
-
 			}
-
-
 		}
-
 		if (ClearInLoopLeftInflectionPointFlag && (LastInLoopLeftInflectionPointFlag && LastLastInLoopLeftInflectionPointFlag && !InLoopLeftInflectionPointFlag))
 		{
 			gpio_set(PTB19, 0);
@@ -1613,77 +1466,52 @@ void LoopExitRepair()
 			OpenLoopExitRepairFlagL = 0;
 			OpenLoopExitRepairFlagR = 0;
 		}
-
 	}
-
 	//右边
 	if (MotivateLoopDlayFlagR && OpenLoopExitRepairFlagR == 0 && MotivateLoopDlayFlagL == 0)//在环道里面,关了环道识别和十字识别
 	{
-
 		OpenLoopExitRepairNumR++;//开个小延时
-
 		if (OpenLoopExitRepairNumR >= 6)
 		{
 			OpenLoopExitRepairNumR = 0;
 			OpenLoopExitRepairFlagR = 1;
 		}
-
 	}
-
-
-
 	if (OpenLoopExitRepairFlagR)
 	{
-
 		LastLastInLoopRightInflectionPointFlag = LastInLoopRightInflectionPointFlag;
 		LastInLoopRightInflectionPointFlag = InLoopRightInflectionPointFlag;
-
 		for (i = 59; i > 20; i--)
 		{
-
 			if (RightEdge[i] != 80 && RightEdge[i - 1] != 80 && RightEdge[i + 1] != 80)
 			{
 				if (RightEdge[i] - RightEdge[i + 1] <= 0 && (RightEdge[i - 1] - RightEdge[i] >= 1))//找到拐点
 				{
 					InLoopRightInflectionPointRow = i - 1;
-
 					InLoopRightInflectionPointFlag = 1;
 					break;
 				}
 				else
-
 				{
-
 					InLoopRightInflectionPointRow = 0;
-
 					InLoopRightInflectionPointFlag = 0;
 				}
 			}
-
 		}
-
 		if (InLoopRightInflectionPointFlag = 1 && (InLoopRightInflectionPointRow >= 25))
 		{
-
 			ClearInLoopRightInflectionPointFlag = 1;
-
 		}
 		if (ClearInLoopRightInflectionPointFlag)
 		{
 			gpio_set(PTB19, 1);
-
 			for (i = 58; i > 15; i--)
 			{
-
 				MiddleLine[i] = RightEdge[i] - Width[i] / 2;
-
 			}
-
 			InLoopDlay++;//启动延时保险清标志
-
 			if (InLoopDlay >= 100)//如果这麽久还没满足清标志的条件,强制清标志
 			{
-
 				gpio_set(PTB19, 0);
 				ClearInLoopRightInflectionPointFlag = 0;
 				LastInLoopRightInflectionPointFlag = 0;
@@ -1694,12 +1522,8 @@ void LoopExitRepair()
 				OpenLoopExitRepairFlagL = 0;
 				OpenLoopExitRepairFlagR = 0;
 			}
-
 		}
-
-
 		if (ClearInLoopRightInflectionPointFlag && (LastInLoopRightInflectionPointFlag && LastLastInLoopRightInflectionPointFlag && (!InLoopRightInflectionPointFlag)))
-
 		{
 			gpio_set(PTB19, 0);
 			ClearInLoopRightInflectionPointFlag = 0;
@@ -1711,11 +1535,5 @@ void LoopExitRepair()
 			OpenLoopExitRepairFlagL = 0;
 			OpenLoopExitRepairFlagR = 0;
 		}
-
 	}
 }
-
-
-
-
-
