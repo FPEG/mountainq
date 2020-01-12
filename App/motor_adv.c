@@ -49,10 +49,10 @@ void MotorControl()
 		return;
 	}
 */
-	if (BlackEndM > 48)
+	if (BlackEndM > 50)
 	{
-		ftm_pwm_duty(FTM0, FTM_CH5, 640);//D5右轮前进
-		ftm_pwm_duty(FTM0, FTM_CH7, 640);//D7左轮前进
+		ftm_pwm_duty(FTM0, FTM_CH5, 660);//D5右轮前进
+		ftm_pwm_duty(FTM0, FTM_CH7, 660);//D7左轮前进
 	}
 	else
 	{
