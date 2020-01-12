@@ -1,5 +1,7 @@
 #include "include.h"
+#include "findtrack.h"
 #include "TrackType.h"
+
 
 /********************************************
 ------------------------------------
@@ -31,7 +33,7 @@ SCL(51的TX)         E9
 *  @note       山外摄像头 LCD 测试实验
 */
 
-//unsigned char CloseLoopFlag = 0;
+//unsigned char CloseLoopFlag=0 ;
 
 void  main(void)
 {
@@ -61,7 +63,7 @@ void  main(void)
 		 * //进了环道 或者十字，关掉圆环处理
 		 */
 			if (MotivateLoopDlayFlagL == 0 &&
-				MotivateLoopDlayFlagR == 0 &&
+			MotivateLoopDlayFlagR == 0 &&
 				CloseLoopFlag == 0
 				)
 			{

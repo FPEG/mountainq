@@ -41,22 +41,22 @@ void MotorControl()
 	OLED_PrintFloat(80, 6, max-mean);
 	OLED_PrintFloat(80, 5, max-min);
 	MaxMean = max - mean;
-
+/*
 	if(MaxMean>40)
 	{
 		ftm_pwm_duty(FTM0, FTM_CH5, 1000);//D5右轮前进
 		ftm_pwm_duty(FTM0, FTM_CH7, 1000);//D5右轮前进
 		return;
 	}
-
+*/
 	if (BlackEndM > 50)
 	{
-		ftm_pwm_duty(FTM0, FTM_CH5, 700);//D5右轮前进
-		ftm_pwm_duty(FTM0, FTM_CH7, 700);//D7左轮前进
+		ftm_pwm_duty(FTM0, FTM_CH5, 680);//D5右轮前进
+		ftm_pwm_duty(FTM0, FTM_CH7, 680);//D7左轮前进
 	}
 	else
 	{
-		ftm_pwm_duty(FTM0, FTM_CH5, 800);//D5右轮前进
-		ftm_pwm_duty(FTM0, FTM_CH7, 800);//D7左轮前进
+		ftm_pwm_duty(FTM0, FTM_CH5, 750);//D5右轮前进
+		ftm_pwm_duty(FTM0, FTM_CH7, 750);//D7左轮前进
 	}
 }
