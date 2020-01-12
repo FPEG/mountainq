@@ -1,5 +1,5 @@
 #include "include.h"
-
+#include "TrackType.h"
 
 /********************************************
 ------------------------------------
@@ -30,6 +30,9 @@ SCL(51的TX)         E9
 *  @since      v5.0
 *  @note       山外摄像头 LCD 测试实验
 */
+
+//unsigned char CloseLoopFlag = 0;
+
 void  main(void)
 {
 	//gpio_init(PTA4, GPO, 0);
@@ -53,14 +56,33 @@ void  main(void)
 			GetBlackEndParam();//获取黑线截止行 
 			SearchCenterBlackline();
 			LCD_show_ZZF_image_t(Threshold);
-			//if (image_buff[60][80] > 60)
-			//{
-			//	ftm_pwm_duty(FTM2, FTM_CH0, 70);//右转
-			//}
-			//else
-			//{
-			//	ftm_pwm_duty(FTM2, FTM_CH0, 85);//左转
-			//}
+			LoopFlag = 0;//环路清标志
+		/*
+		 * //进了环道 或者十字，关掉圆环处理
+		 */
+			if (MotivateLoopDlayFlagL == 0 &&
+				MotivateLoopDlayFlagR == 0 &&
+				CloseLoopFlag == 0
+				)
+			{
+				FindInflectionPoint();//寻找拐点
+				FindLoopExit();
+				LoopControl();
+				LoopRepair();
+			}
+
+			if (MotivateLoopDlayFlagL ||
+				MotivateLoopDlayFlagR)
+			{
+				LoopExitRepair();//出口处理
+			}
+			if (LoopRightControlFlag == 0 && LoopLeftControlFlag == 0 && MotivateLoopDlayFlagL == 0 && MotivateLoopDlayFlagR == 0 && LoopFlag == 0)
+			{
+				NormalCrossConduct();
+
+			}
+
+			
 			MotorControl();
 			SteerControl();
 			mt9v032_finish_flag = 0;

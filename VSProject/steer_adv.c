@@ -168,14 +168,14 @@ void SteerControl(void)
 	 * //舵机pwm更新
 	*/
 	LCD_Show_Number3(80, 1, SteerPwm);
-	if(MaxMean>40)
-	{
-		ftm_pwm_duty(S3010_FTM, S3010_CH, SteerMidle);
-	}
-	else
-	{
+	//if(MaxMean>40)
+	//{
+	//	ftm_pwm_duty(S3010_FTM, S3010_CH, SteerMidle);
+	//}
+	//else
+	//{
 		ftm_pwm_duty(S3010_FTM, S3010_CH, SteerPwm);
-	}
+	//}
 	/*
 	 * //记录pwm值
 	 */

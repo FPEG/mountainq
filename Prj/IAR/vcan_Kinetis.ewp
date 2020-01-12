@@ -6334,6 +6334,12 @@
         <file>
             <name>$PROJ_DIR$\..\..\App\Inc\Test.h</name>
         </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\App\TrackType.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\App\TrackType.h</name>
+        </file>
     </group>
     <group>
         <name>Board</name>

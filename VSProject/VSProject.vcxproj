@@ -27,6 +27,7 @@
     <ClInclude Include="motor_adv.h" />
     <ClInclude Include="MT9V032.h" />
     <ClInclude Include="steer_adv.h" />
+    <ClInclude Include="TrackType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="findtrack.c" />
@@ -37,6 +38,7 @@
     <ClCompile Include="MT9V032.c" />
     <ClCompile Include="steer.c" />
     <ClCompile Include="steer_adv.c" />
+    <ClCompile Include="TrackType.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
